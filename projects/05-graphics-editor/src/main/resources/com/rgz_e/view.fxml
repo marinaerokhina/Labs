@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.Canvas?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rgz_e.presentation.MainController">
+   <top>
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onNew" text="New" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#onExit" text="Exit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onUndo" text="Undo" />
+                  <MenuItem mnemonicParsing="false" onAction="#onRedo" text="Redo" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+   
+   <left>
+      <VBox spacing="10.0" style="-fx-background-color: #f0f0f0;">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         
+         <Label text="Tools" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+         
+         <Label text="Shape Type:" />
+         <ComboBox fx:id="shapeTypeComboBox" prefWidth="150.0" />
+         
+         <Button fx:id="createButton" mnemonicParsing="false" onAction="#onCreateButtonClicked" prefWidth="150.0" text="Create Shape" />
+         
+         <Separator />
+         
+         <Label text="Selection" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+         
+         <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefWidth="150.0" text="Delete" />
+         
+         <Button fx:id="bringToFrontButton" mnemonicParsing="false" onAction="#onBringToFrontClicked" prefWidth="150.0" text="Bring to Front" />
+         
+         <Button fx:id="sendToBackButton" mnemonicParsing="false" onAction="#onSendToBackClicked" prefWidth="150.0" text="Send to Back" />
+         
+         <Separator />
+         
+         <Label text="History" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+         
+         <Button fx:id="undoButton" mnemonicParsing="false" onAction="#onUndoClicked" prefWidth="150.0" text="Undo (Ctrl+Z)" />
+         
+         <Button fx:id="redoButton" mnemonicParsing="false" onAction="#onRedoClicked" prefWidth="150.0" text="Redo (Ctrl+Y)" />
+      </VBox>
+   </left>
+   
+   <center>
+      <Canvas fx:id="canvas" height="600.0" width="800.0" />
+   </center>
+   
+   <bottom>
+      <Label fx:id="statusLabel" text="Ready. Double-click to create shape." BorderPane.alignment="CENTER_LEFT">
+         <padding>
+            <Insets left="10.0" right="10.0" top="5.0" bottom="5.0" />
+         </padding>
+      </Label>
+   </bottom>
+</BorderPane>
+
