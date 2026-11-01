@@ -16,22 +16,16 @@ Each project has been **unpacked from the original ZIP** so its source code can 
 | [04 — Pot on Stove](projects/04-pot-on-stove/) | Multithreading, heating model, JavaFX chart | [Java sources](projects/04-pot-on-stove/src/main/java/) |
 | [05 — Graphics Editor](projects/05-graphics-editor/) | Command pattern, undo/redo and geometric tools | [Java sources](projects/05-graphics-editor/src/main/java/) |
 
-## Build and run
+## Run a project
 
-**Prerequisites:** Java **JDK 21**, Maven 3.9+, and a graphical desktop environment to launch JavaFX. Some projects declare JavaFX 23.0.1 in their POM files.
-
-Each folder under `projects/` is a **standalone Maven project**, not a module in a common Maven reactor:
+Requires **JDK 21** and **Maven**. Each lab is an independent project. For example, from the repository root:
 
 ```bash
-git clone https://github.com/marinaerokhina/Labs.git
-cd Labs/projects/01-fifteen-puzzle
-mvn clean package
+cd projects/01-fifteen-puzzle
 mvn javafx:run
 ```
 
-Substitute the appropriate folder (`02-deep-cloner`, `03-peak-indicator`, `04-pot-on-stove` or `05-graphics-editor`) for other labs. Open a graphical JavaFX-capable session to try the UI.
-
-The GitHub Actions matrix builds all five projects independently. **A successful headless build is not proof that each GUI screen works correctly.**
+For another lab, use its corresponding folder under `projects/`. JavaFX requires a graphical desktop. All five projects are compiled in GitHub Actions.
 
 ## Original submissions and documentation
 
