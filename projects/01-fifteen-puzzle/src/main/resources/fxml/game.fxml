@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.fifteenpuzzle.Presentation.GameController">
+    <top>
+        <HBox spacing="8">
+            <padding>
+               <Insets topRightBottomLeft="10"/>
+            </padding>
+            <children>
+                <Label text="Размер (N):" />
+                <TextField fx:id="sizeField" prefWidth="60" promptText="4" />
+                <Button text="Новая игра" onAction="#onNewGame" />
+                <Button text="Перемешать" onAction="#onShuffle" />
+                <Region HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <StackPane>
+            <padding>
+               <Insets topRightBottomLeft="10"/>
+            </padding>
+            <children>
+                <GridPane fx:id="grid" hgap="6" vgap="6">
+                    <columnConstraints>
+                        <!-- Создаются динамически в контроллере -->
+                    </columnConstraints>
+                    <rowConstraints>
+                        <!-- Создаются динамически в контроллере -->
+                    </rowConstraints>
+                </GridPane>
+            </children>
+        </StackPane>
+    </center>
+    <bottom>
+        <HBox>
+            <padding>
+               <Insets topRightBottomLeft="10"/>
+            </padding>
+            <children>
+                <Label fx:id="statusLabel" text="Готово" />
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -1,218 +1,48 @@
-# Labs — Лабораторные работы по инжинирингу ПО
+# Software Engineering Labs — Java & JavaFX
 
-Репозиторий содержит серию проектов, выполненных в рамках курса "Инжиниринг ПО" (НГТУ, 5 семестр). Все проекты построены на принципах **слоистой архитектуры** (Domain → Application → Presentation → Infrastructure) с применением **паттернов проектирования** и акцентом на разделение ответственности.
-Проекты оставлены в zip-архивах вследствие того, что запуск происходит через исполняемый файл. Информацию по конкретным проектам и листинг кода можно увидеть в отчетах Word.
+**Five independent Maven/JavaFX coursework projects** from a software engineering course (semester 5). They explore layered architecture, design patterns, Java concurrency, graphics and event-driven application design.
 
-## 📋 Список работ
+Each project has been **unpacked from the original ZIP** so its source code can be browsed directly. The original archives and Word reports are retained at the repository root for reference.
 
-| № | Проект | Тема | Ключевые паттерны и концепции |
-|---|--------|------|-------------------------------|
-| 1 | [Пятнашки](#1-пятнашки-fifteen-puzzle) | Игра с произвольной размерностью | Слоистая архитектура, Value Objects, алгоритм решаемости |
-| 2 | [DeepCloner](#2-deepcloner) | Универсальный фреймворк глубокого клонирования | Strategy, Builder, Factory, Reflection API, аннотации |
-| 3 | [Peak Indicator](#3-peak-indicator) | Пиковый индикатор уровня | Observer, Value Objects, ScheduledExecutorService |
-| 4 | [Pot on Stove](#4-pot-on-stove) | Симулятор кастрюли на плите | Observer, многопоточность, физическая модель |
-| 5 | [Graphics Editor](#5-graphics-editor) | Графический редактор (РГЗ) | Command, Undo/Redo, полиморфизм фигур |
+> Educational portfolio, not production software. GUI execution has not been manually verified on every operating system.
 
----
+## Projects
 
-## 1. Пятнашки (Fifteen Puzzle)
+| Project | Focus | Source |
+| --- | --- | --- |
+| [01 — Fifteen Puzzle](projects/01-fifteen-puzzle/) | N×N puzzle, value objects, layered UI/domain logic | [Java sources](projects/01-fifteen-puzzle/src/main/java/) |
+| [02 — DeepCloner](projects/02-deep-cloner/) | Reflection, cloning, Strategy/Builder/Factory | [Java sources](projects/02-deep-cloner/src/main/java/) |
+| [03 — Peak Indicator](projects/03-peak-indicator/) | Observer, domain events, timed signal updates | [Java sources](projects/03-peak-indicator/src/main/java/) |
+| [04 — Pot on Stove](projects/04-pot-on-stove/) | Multithreading, heating model, JavaFX chart | [Java sources](projects/04-pot-on-stove/src/main/java/) |
+| [05 — Graphics Editor](projects/05-graphics-editor/) | Command pattern, undo/redo and geometric tools | [Java sources](projects/05-graphics-editor/src/main/java/) |
 
-Игра "Пятнашки" с произвольной размерностью N×N и гарантированно решаемыми конфигурациями.
+## Build and run
 
-### Архитектура
-```
-Presentation (GameController + FXML)
-      ↓
-Application (GameService)
-      ↓
-Domain (Board, Position)
-```
+**Prerequisites:** Java **JDK 21**, Maven 3.9+, and a graphical desktop environment to launch JavaFX. Some projects declare JavaFX 23.0.1 in their POM files.
 
-### Ключевые особенности
-- **Value Object `Position`** с методом `isAdjacent()` (Манхэттен-соседство)
-- **Алгоритм проверки решаемости** через подсчёт инверсий с учётом чётности N и позиции пустой ячейки
-- **Динамическая разметка** GridPane с N×N ячейками
-- Чистое разделение: UI не знает о правилах игры, домен не знает о JavaFX
+Each folder under `projects/` is a **standalone Maven project**, not a module in a common Maven reactor:
 
-### Демонстрируемые навыки
-✅ Слоистая архитектура  
-✅ Value Objects  
-✅ Алгоритмы (подсчёт инверсий)  
-✅ Динамический GUI  
-
----
-
-## 2. DeepCloner
-
-Универсальный фреймворк для глубокого клонирования произвольных Java-объектов через рефлексию.
-
-### Архитектура
-```
-API (Cloner, ClonerBuilder)
-      ↓
-Application (ClonerService, ReflectionModel, StrategyRegistry)
-      ↓
-Domain (CloneStrategy, InstanceFactory, CloneContext, аннотации)
-      ↓
-Infrastructure (ArrayStrategy, CollectionStrategy, MapStrategy, DateTimeStrategy, IdentityStrategy)
+```bash
+git clone https://github.com/marinaerokhina/Labs.git
+cd Labs/projects/01-fifteen-puzzle
+mvn clean package
+mvn javafx:run
 ```
 
-### Ключевые особенности
-- **Паттерн Strategy** — для каждого типа данных своя стратегия клонирования
-- **Паттерн Builder** — гибкая настройка фреймворка через `ClonerBuilder`
-- **Паттерн Factory** — абстракция создания экземпляров (`InstanceFactory`)
-- **Защита от циклических ссылок** через `CloneContext` с кэшем уже клонированных объектов
-- **Аннотации для управления поведением:**
-  - `@CloneIgnore` — исключить поле из клонирования
-  - `@ShallowClone` — поверхностное копирование
-  - `@CloneWith` — принудительно задать стратегию
-- Поддержка коллекций, массивов, Map, Date/Calendar, records
+Substitute the appropriate folder (`02-deep-cloner`, `03-peak-indicator`, `04-pot-on-stove` or `05-graphics-editor`) for other labs. Open a graphical JavaFX-capable session to try the UI.
 
-### Демонстрируемые навыки
-✅ Reflection API  
-✅ 3 паттерна проектирования  
-✅ Работа с аннотациями  
-✅ Обработка циклических графов  
-✅ Расширяемая архитектура  
+The GitHub Actions matrix builds all five projects independently. **A successful headless build is not proof that each GUI screen works correctly.**
 
----
+## Original submissions and documentation
 
-## 3. Peak Indicator
+The original `LAB1SEM5.zip`–`LAB4SEM5.zip` and `RGRSEM5_Erokhina.zip` are kept unchanged. The associated `.docx` reports are also retained. The original in-depth Russian project descriptions are available in [README_RUS.md](README_RUS.md).
 
-Вертикальный пиковый индикатор уровня с инертным индикатором максимума (красная линия плавно спадает).
+## What this portfolio demonstrates
 
-### Архитектура
-```
-Presentation (PeakIndicatorPane, MainController)
-      ↓
-Application (IndicatorService, DataSource, LevelListener, ThresholdListener)
-      ↓
-Domain (LevelValue, Thresholds, IndicatorSnapshot, LevelUpdated, MaxThresholdExceeded)
-      ↓
-Infrastructure (PeriodicTimer, SineNoiseSource)
-```
+- Separating domain/application logic from GUI code
+- Object-oriented modeling and design patterns (Observer, Strategy, Command, Builder and Factory)
+- Java reflection and annotation processing
+- Concurrency and UI-thread coordination
+- JavaFX controls, FXML and drawing with Canvas
 
-### Ключевые особенности
-- **Value Objects** `LevelValue` (с само-валидацией 0..1) и `Thresholds`
-- **Событийная модель** — доменные события `LevelUpdated` и `MaxThresholdExceeded`
-- **Инерция пика** — красная линия линейно спадает со скоростью `peakDecayPerSecond`
-- **ScheduledExecutorService** для периодических тиков без привязки к UI
-- Отрисовка через `Canvas` с автоматическим ресайзом
-
-### Демонстрируемые навыки
-✅ Domain Events  
-✅ Value Objects с валидацией  
-✅ ScheduledExecutorService  
-✅ JavaFX Canvas  
-✅ Слабая связность слоёв  
-
----
-
-## 4. Pot on Stove
-
-Симулятор кастрюли на плите с физической моделью термодинамики, работающий в отдельном потоке.
-
-### Архитектура
-```
-Presentation (PotControlPane, MainController, App)
-      ↓
-Application (PotOnStoveController — Runnable)
-      ↓
-Domain (PotState, PotCommands, PotStateListener, BoilingStarted/StoppedEvent)
-```
-
-### Ключевые особенности
-- **Физическая модель:** нагрев, теплопотери (зависят от крышки), кипение при 100°C, испарение
-- **Многопоточность:** симуляция в отдельном потоке, GUI в JavaFX Application Thread
-- **Паттерн Observer** — `PotStateListener` с методами `onStateUpdate()` и `onEvent()`
-- **Потокобезопасность:** `CopyOnWriteArrayList` для подписчиков, `synchronized` для методов изменения состояния
-- **Platform.runLater()** для безопасного обновления GUI из фонового потока
-- **Корректный жизненный цикл** — остановка потока при закрытии приложения
-
-### Демонстрируемые навыки
-✅ Многопоточность  
-✅ Потокобезопасность  
-✅ Observer pattern  
-✅ Физическое моделирование  
-✅ Корректная работа с JavaFX в многопоточной среде  
-
----
-
-## 5. Graphics Editor (РГЗ)
-
-Полноценный графический редактор с поддержкой трёх типов фигур и механизмом Undo/Redo.
-
-### Архитектура
-```
-Presentation (MainController, DrawingCanvas)
-      ↓
-Command (CommandManager + 6 конкретных команд)
-      ↓
-Domain (Shape, Rectangle, Circle, Triangle, ShapeManager)
-```
-
-### Поддерживаемые фигуры
-- **Прямоугольник** — изменение размера через 4 угловых маркера
-- **Круг** — сохраняет пропорции, изменение размера от центра
-- **Треугольник** — равнобедренный, изменение размера через 3 вершины (барицентрические координаты для hit-testing)
-
-### Команды
-- `CreateShapeCommand` — создание фигуры выбранного типа
-- `MoveShapeCommand` — перемещение
-- `ResizeShapeCommand` — изменение размера
-- `DeleteShapeCommand` — удаление с возможностью восстановления
-- `BringToFrontCommand` / `SendToBackCommand` — изменение z-order
-
-### Ключевые особенности
-- **Паттерн Command** — каждая операция инкапсулирована в отдельном классе
-- **Undo/Redo** через два стека (`ArrayDeque`) с ограничением истории (50 команд)
-- **Полиморфизм фигур** — абстрактный `Shape` с методами `draw()`, `contains()`, `isInResizeArea()`, `copy()`
-- **Глубокое копирование** для корректной работы Undo
-- **Горячие клавиши:** Ctrl+Z, Ctrl+Y, Delete
-- **Специальная логика** для каждой фигуры при resize
-
-### Демонстрируемые навыки
-✅ Command pattern  
-✅ Undo/Redo механизм  
-✅ Полиморфизм и наследование  
-✅ Геометрические алгоритмы (hit-testing, барицентрические координаты)  
-✅ JavaFX Canvas  
-✅ Обработка событий мыши и клавиатуры  
-
----
-
-## 🛠 Общие технологии
-
-- **Java 17+** (включая records, pattern matching)
-- **JavaFX** — GUI
-- **FXML** — разметка интерфейса
-- **Maven** — сборка
-- **Reflection API** — для DeepCloner
-- **java.util.concurrent** — для многопоточности
-
-## 🎯 Сквозные архитектурные принципы
-
-Во всех проектах прослеживаются:
-
-1. **Слоистая архитектура** — чёткое разделение Domain / Application / Presentation / Infrastructure
-2. **Зависимости сверху вниз** — Domain не зависит ни от чего, Presentation зависит от Application
-3. **Value Objects** — неизменяемые объекты с само-валидацией
-4. **Слабая связность** — слои общаются через интерфейсы
-5. **Паттерны проектирования** — каждый проект демонстрирует 1-3 паттерна
-6. **Чистый домен** — бизнес-логика не зависит от UI и фреймворков
-
-## 📚 Чему научилась
-
-✅ Слоистая и чистая архитектура  
-✅ 6+ паттернов проектирования (Command, Observer, Strategy, Builder, Factory, Value Object)  
-✅ Многопоточное программирование  
-✅ JavaFX (GUI, Canvas, FXML, Platform.runLater)  
-✅ Reflection API и аннотации  
-✅ Алгоритмы (инверсии, барицентрические координаты)  
-✅ Физическое моделирование  
-✅ Доменно-ориентированное проектирование (DDD-подход)  
-
----
-
-**Автор:** Марина Ерохина  
-**Курс:** 5 семестр, дисциплина "Инжиниринг ПО"  
+**Author:** Marina Erokhina · University coursework, semester 5.

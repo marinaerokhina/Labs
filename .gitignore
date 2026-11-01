@@ -1,0 +1,10 @@
+# Maven output and IDE metadata
+target/
+**/target/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.DS_Store
+Thumbs.db

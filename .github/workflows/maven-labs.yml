@@ -1,0 +1,28 @@
+name: Build Java coursework projects
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  maven-build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - 01-fifteen-puzzle
+          - 02-deep-cloner
+          - 03-peak-indicator
+          - 04-pot-on-stove
+          - 05-graphics-editor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+          cache-dependency-path: projects/*/pom.xml
+      - name: Compile and package
+        run: mvn -B -ntp -f "projects/${{ matrix.project }}/pom.xml" clean package
